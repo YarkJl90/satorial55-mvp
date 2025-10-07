@@ -6,6 +6,7 @@ from config import Config
 
 db = SQLAlchemy()
 
+
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
@@ -17,6 +18,6 @@ def create_app():
 
     @app.route("/")
     def index():
-        return {"message": "Satorial55 conectado a base de datos SQLite ✅"}
+        return {"message": "Satorial55 conectado a base de datos PostgreSQL ✅"}
 
     return app
