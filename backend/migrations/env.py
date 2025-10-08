@@ -8,11 +8,12 @@ BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
 if BASE_DIR not in sys.path:
     sys.path.insert(0, BASE_DIR)
 
-from backend.app import create_app, db  # Importar app y db desde tu paquete Flask
+# Importar desde el paquete `app` (ruta relativa al workspace)
+from app import create_app
+from app.db import db
 
-# --- Crear la app y empujar el contexto ---
+# Crear la app pero NO empujar el contexto aquí; Alembic gestiona conexiones directamente.
 app = create_app()
-app.app_context().push()
 
 # --- Configuración principal ---
 config = context.config

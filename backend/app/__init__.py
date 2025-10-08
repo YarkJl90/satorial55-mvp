@@ -1,24 +1,30 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+from app.db import db
 from flask_cors import CORS
-from flask_jwt_extended import JWTManager
 
-db = SQLAlchemy()
 
-def create_app():
+def create_app(config: dict | None = None):
+    """Create and configure the Flask application.
+
+    Args:
+        config: Optional dictionary of configuration overrides (useful for tests).
+
+    Returns:
+        A configured Flask application instance.
+    """
     app = Flask(__name__)
-    from .config import Config
-    app.config.from_object(Config)
+    app.config.from_object("app.config.Config")
+    # Apply overrides (e.g. TESTING or SQLALCHEMY_DATABASE_URI)
+    if config:
+        app.config.update(config)
 
     db.init_app(app)
     CORS(app)
-    JWTManager(app)
 
-    with app.app_context():
-        from . import models  # noqa
-
-    @app.get("/")
-    def health():
-        return {"message": "Satorial55 conectado a base de datos ✅"}
+    # Register blueprints (import after init_app to avoid import cycles)
+    from app.routes.catalog import catalog_bp
+    app.register_blueprint(catalog_bp)
+    from app.routes.procurement import procurement_bp
+    app.register_blueprint(procurement_bp)
 
     return app
