@@ -15,3 +15,6 @@ def create_app():
         db.create_all()
 
     return app
+
+# 👇 Esto va al final del archivo
+app = create_app()
