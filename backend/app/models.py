@@ -4,7 +4,7 @@ from sqlalchemy import (
     Column, Integer, String, Text, Date, DateTime, Boolean, Numeric, ForeignKey, CheckConstraint
 )
 from sqlalchemy.orm import relationship
-from app.db import db
+from backend.app.db import db
 
 # --------------------------------------------
 # 🔹 Base Units and Catalog
