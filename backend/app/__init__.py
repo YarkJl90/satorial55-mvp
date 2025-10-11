@@ -1,5 +1,5 @@
 from flask import Flask
-from app.db import db
+from backend.app.db import db
 from flask_cors import CORS
 
 
